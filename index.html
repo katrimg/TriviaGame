@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!--  <script src="app.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Trivia Game</title>
+</head>
+
+<body>
+    <h1> Totally Trivia </h1>
+
+    <div class="container">
+
+        <div>Time remaining:
+            <span id="time">02:00</span>
+        </div>
+        <div id="quiz"></div>
+
+
+
+        <br>
+        <div>Question 1:
+            <span id="question1"></span>
+        </div>
+        <div id="answers-div1"></div>
+        <div id="answers-div2"></div>
+        <div id="answers-div3"></div>
+        <div id="answers-div4"></div>
+        <div id="answers-div5"></div>
+        <div id="answers-div6"></div>
+        <br>
+        <div>Questions 2:
+            <span id="question2"></span>
+        </div>
+
+        <div id="answers-div7"></div>
+        <div id="answers-div8"></div>
+        <div id="answers-div9"></div>
+        <div id="answers-div10"></div>
+        <div id="answers-div11"></div>
+        <div id="answers-div12"></div>
+        <br>
+        <div>Questions 3:
+            <span id="question3"></span>
+        </div>
+
+        <div id="answers-div13"></div>
+        <div id="answers-div14"></div>
+        <div id="answers-div15"></div>
+        <div id="answers-div16"></div>
+        <div id="answers-div17"></div>
+        <div id="answers-div18"></div>
+        <br>
+        <button id="submit">Get Results</button>
+    </div>
+    <div id="results"></div>
+    <script type="text/javascript">
+
+
+        //creating a variable triviaQuestions to hold my questions, answers, and correctAnswer
+        var triviaQuestions = [
+            {
+                questions: "Which Disney princess ate a poisoned apple?",
+                answers: {
+                    a: 'Snow White',
+                    b: 'Cinderella',
+                    c: 'Sleeping Beauty'
+                },
+                correctAnswer: "a"
+            },
+            {
+                questions: "How many dwarves are there in Snow White?",
+                answers: {
+                    a: '5',
+                    b: '2',
+                    c: '7'
+                },
+                correctAnswer: "c"
+            },
+            {
+                questions: "What is the snowman's name in Frozen?",
+                answers: {
+                    a: 'Snow White',
+                    b: 'Antonio',
+                    c: 'Olaf'
+                },
+                correctAnswer: "c"
+            }
+        ];
+
+        //timer to be displayed on the html
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10)
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    timer = duration;
+                }
+            }, 1000);
+            
+        }
+
+   
+        //on window open - run function that counts down from 2 minutes and puts the value in time div
+        window.onload = function () {
+            var twoMinutes = 60 * 2,
+                display = document.querySelector('#time');
+            startTimer(twoMinutes, display);
+        };
+
+
+
+        //display trivia question 1 and answer options
+        $("#question1").html(triviaQuestions[0].questions);
+
+        var radiob1 = $('<input type="radio" name="rbtnCount" />');
+        $("#answers-div1").html(triviaQuestions[0].answers.a);
+        $("#answers-div2").html(radiob1);
+
+        var radiob2 = $('<input type="radio" name="rbtnCount" />');
+        $("#answers-div3").html(triviaQuestions[0].answers.b);
+        $("#answers-div4").html(radiob2);
+
+        var radiob3 = $('<input type="radio" name="rbtnCount" />');
+        $("#answers-div5").html(triviaQuestions[0].answers.c);
+        $("#answers-div6").html(radiob3);
+
+
+
+        //repeat for trivia question 2
+        $("#question2").html(triviaQuestions[1].questions);
+
+        var radiob4 = $('<input type="radio" name="rbtnCount" />');
+        $("#answers-div7").html(triviaQuestions[1].answers.a);
+        $("#answers-div8").html(radiob4);
+
+        var radiob5 = $('<input type="radio" name="rbtnCount" />');
+        $("#answers-div9").html(triviaQuestions[1].answers.b);
+        $("#answers-div10").html(radiob5);
+
+        var radiob6 = $('<input type="radio" name="rbtnCount" />');
+        $("#answers-div11").html(triviaQuestions[1].answers.c);
+        $("#answers-div12").html(radiob6);
+
+
+
+
+        //repeat for trivia 3
+        $("#question3").html(triviaQuestions[2].questions);
+
+        var radiob7 = $('<input type="radio" name="rbtnCount" />');
+        $("#answers-div13").html(triviaQuestions[2].answers.a);
+        $("#answers-div14").html(radiob7);
+
+        var radiob8 = $('<input type="radio" name="rbtnCount" />');
+        $("#answers-div15").html(triviaQuestions[2].answers.b);
+        $("#answers-div16").html(radiob8);
+
+        var radiob9 = $('<input type="radio" name="rbtnCount" />');
+        $("#answers-div17").html(triviaQuestions[2].answers.c);
+        $("#answers-div18").html(radiob9);
+
+
+        
+       
+        //create variables to hold the amount of wins, losses, and unanswered
+        var wins = 0;
+        var losses = 0;
+        var unanswered = 0;
+
+//functions that add to the wins/losses depending on the answer chosen
+        $(function () {
+            $("#answers-div2").click(function () {
+                wins++;
+                console.log(wins);
+            }
+            );
+        });
+
+        $(function () {
+            $("#answers-div4").click(function () {
+                losses++;
+                console.log(losses);
+            }
+            );
+        });
+        $(function () {
+            $("#answers-div6").click(function () {
+                losses++;
+            }
+            );
+        });
+
+        $(function () {
+            $("#answers-div8").click(function () {
+                losses++;
+            }
+            );
+        });
+
+        $(function () {
+            $("#answers-div10").click(function () {
+                losses++;
+            }
+            );
+        });
+        $(function () {
+            $("#answers-div12").click(function () {
+                wins++;
+            }
+            );
+        });
+
+        $(function () {
+            $("#answers-div14").click(function () {
+                losses++;
+            }
+            );
+        });
+
+        $(function () {
+            $("#answers-div16").click(function () {
+                losses++;
+            }
+            );
+        });
+
+        $(function () {
+            $("#answers-div18").click(function () {
+                wins++;
+            }
+            );
+        });
+
+        //if the user clicks result, hide all other info, and show the 3 divs
+        $('#submit').click(function () {
+            if (this.id == 'submit') {
+
+                $(".container").hide();
+
+                var html =
+                    "<p> Correct Answers: " + wins + "</p>" +
+                    "<p> Incorrect Answers: " + losses + "</p>";
+                "<p> Unanswered: " + unanswered + "</p>";
+
+                document.querySelector("#results").innerHTML = html;
+            }
+            
+            
+            // need to create another if statement so the results are shown if the timer runs out
+            // if ("#time" === "00:00") {
+
+            //also need to figure out how to make it possible for the user to select 1 answer per question   
+        });
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>
